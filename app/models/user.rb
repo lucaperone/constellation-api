@@ -7,6 +7,7 @@ class User < Node
         vector = super
         unless self.birthday.nil?
             vector[:age] = normalized_age(age)
+        end
         return vector
     end
 
