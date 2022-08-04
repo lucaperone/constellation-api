@@ -2,6 +2,8 @@ class Edge < ApplicationRecord
     belongs_to :node_a, :class_name => 'Node'
     belongs_to :node_b, :class_name => 'Node'
 
+    after_create :update_distance
+
     validates :distance, numericality: { in: 0.0..1.0 }
 
     MODIFIER_SCALE = 0.15

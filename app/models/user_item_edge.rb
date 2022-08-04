@@ -14,8 +14,11 @@ class UserItemEdge < Edge
     MAX_VISITS = 10
     VISITS_NORMALIZER = 1.0 / MAX_VISITS
 
-    def guards 
-        return self.user.age < self.item.age_restriction # add distance ?
+    def guards
+        unless self.user.age.nil? || self.item.age_restriction.nil?
+            return self.user.age < self.item.age_restriction # add distance ?
+        end
+        return false
     end
 
     def modifiers
