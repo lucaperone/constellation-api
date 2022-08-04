@@ -1,0 +1,2 @@
+class Tag < Feature
+end

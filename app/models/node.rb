@@ -4,7 +4,7 @@ class Node < ApplicationRecord
     has_many :edge_bs, class_name: "Edge", foreign_key: "node_b_id"
     has_many :node_bs, through: :edge_bs
 
-    serialize :features, JSON
+    serialize :attributes, JSON
 
     validates :latitude, allow_nil: true, numericality: { in: -90.0..90.0 }
     validates :longitude, allow_nil: true, numericality: { in: -180.0..180.0 }
@@ -14,6 +14,6 @@ class Node < ApplicationRecord
     end
 
     def normalized_vector
-        return self.features.nil? ? {} : self.features
+        return self.attributes.nil? ? {} : self.attributes
     end
 end
