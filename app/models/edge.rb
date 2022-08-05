@@ -10,7 +10,7 @@ class Edge < ApplicationRecord
 
     def update_distance
         if guards
-            return 1
+            return 1.0
         end
 
         vector_a = node_a.normalized_vector
@@ -18,10 +18,10 @@ class Edge < ApplicationRecord
         keys = vector_a.keys & vector_b.keys
 
         if keys.empty?
-            return 1
+            return 1.0
         end
 
-        distance = 0
+        distance = 0.0
         keys.each do |key|
             distance += ((vector_a[key] - vector_b[key])**2)
         end
@@ -36,6 +36,6 @@ class Edge < ApplicationRecord
     end
 
     def modifiers
-        return 0
+        return 0.0
     end
 end

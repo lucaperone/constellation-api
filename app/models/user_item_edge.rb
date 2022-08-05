@@ -22,10 +22,10 @@ class UserItemEdge < Edge
     end
 
     def modifiers
-        value = 0
-        value += self.rating.nil? ? 0 : self.rating * RATING_NORMALIZER - RATING_OFFSET
-        value += self.visits.clamp(0,MAX_VISITS) * VISITS_NORMALIZER
-        value += self.is_in_favourites ? 1 : 0
+        value = 0.0
+        value += self.rating.nil? ? 0.0 : self.rating * RATING_NORMALIZER - RATING_OFFSET
+        value += self.visits.clamp(0.0,MAX_VISITS) * VISITS_NORMALIZER
+        value += self.is_in_favourites ? 1.0 : 0.0
         return value
     end
 end

@@ -10,8 +10,8 @@ class UsersEdge < Edge
     end
 
     def modifiers
-        value = 0
-        value += self.are_friends ? 1 : 0
+        value = 0.0
+        value += self.are_friends ? 1.0 : 0.0
         return value
     end
 end
