@@ -12,20 +12,8 @@ class Edge < ApplicationRecord
         if guards
             return 1.0
         end
-
-        vector_a = node_a.normalized_vector
-        vector_b = node_b.normalized_vector
-        keys = vector_a.keys & vector_b.keys
-
-        if keys.empty?
-            return 1.0
-        end
-
-        distance = 0.0
-        keys.each do |key|
-            distance += ((vector_a[key] - vector_b[key])**2)
-        end
-        distance = Math.sqrt(distance/keys.length)
+        
+        distance = Node.distance(node_a, node_b)
         distance -= modifiers * MODIFIER_SCALE
         
         self.update(distance: distance.clamp(0.0,1.0))

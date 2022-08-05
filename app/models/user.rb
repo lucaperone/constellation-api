@@ -1,22 +1,22 @@
 class User < Node
-    after_create :reset_edges
+    # after_create :reset_edges
 
     MIN_AGE = 14
     MAX_AGE = 70
     AGE_NORMALIZER = 1.0/(MAX_AGE-MIN_AGE)
 
-    def reset_edges
-        edges.delete_all
-        Node.where.not(id: id).each do |node|
-            type = nil
-            if node.is_a?(User)
-                type = "UsersEdge"
-            elsif node.is_a?(Item)
-                type = "UserItemEdge"
-            end
-            Edge.create(type: type, node_a: self, node_b: node)
-        end
-    end
+    # def reset_edges
+    #     edges.delete_all
+    #     Node.where.not(id: id).each do |node|
+    #         type = nil
+    #         if node.is_a?(User)
+    #             type = "UsersEdge"
+    #         elsif node.is_a?(Item)
+    #             type = "UserItemEdge"
+    #         end
+    #         Edge.create(type: type, node_a: self, node_b: node)
+    #     end
+    # end
 
     def normalized_vector
         vector = super
