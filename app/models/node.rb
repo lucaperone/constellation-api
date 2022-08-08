@@ -1,4 +1,6 @@
 class Node < ApplicationRecord
+    after_initialize :set_features
+    
     has_many :edge_as, class_name: "Edge", foreign_key: "node_a_id"
     has_many :node_as, through: :edge_as
     has_many :edge_bs, class_name: "Edge", foreign_key: "node_b_id"
@@ -8,6 +10,10 @@ class Node < ApplicationRecord
 
     validates :latitude, allow_nil: true, numericality: { in: -90.0..90.0 }
     validates :longitude, allow_nil: true, numericality: { in: -180.0..180.0 }
+
+    def set_features
+        self.features ||= Feature.fill_vector({})
+    end
 
     def self.similarity(node_a, node_b)
         vector_a = node_a.normalized_vector
