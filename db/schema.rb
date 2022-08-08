@@ -19,13 +19,14 @@ ActiveRecord::Schema.define(version: 2022_08_04_175707) do
     t.string "type"
     t.bigint "node_a_id"
     t.bigint "node_b_id"
-    t.float "distance", default: 1.0
+    t.float "similarity", default: 0.0
     t.boolean "are_friends", default: false
     t.boolean "is_in_favourites", default: false
     t.integer "rating"
     t.integer "visits", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["node_a_id", "node_b_id"], name: "index_edges_on_node_a_id_and_node_b_id"
     t.index ["node_a_id"], name: "index_edges_on_node_a_id"
     t.index ["node_b_id"], name: "index_edges_on_node_b_id"
   end

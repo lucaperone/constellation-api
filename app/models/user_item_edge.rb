@@ -8,24 +8,25 @@ class UserItemEdge < Edge
     validates :visits, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
     MAX_RATING = 10
-    RATING_NORMALIZER = 2.0 / MAX_RATING
-    RATING_OFFSET = 1
-    
-    MAX_VISITS = 10
-    VISITS_NORMALIZER = 1.0 / MAX_VISITS
+    RATING_NORMALIZER = 1.0 / MAX_RATING
 
-    def guards
-        unless self.user.age.nil? || self.item.age_restriction.nil?
-            return self.user.age < self.item.age_restriction # add distance ?
+    MIN_VISITS = 3
+
+    def score
+        score = 0.0
+        count = 0
+        unless rating.nil?
+            score += rating * RATING_NORMALIZER
+            count += 1
         end
-        return false
-    end
-
-    def modifiers
-        value = 0.0
-        value += self.rating.nil? ? 0.0 : self.rating * RATING_NORMALIZER - RATING_OFFSET
-        value += self.visits.clamp(0.0,MAX_VISITS) * VISITS_NORMALIZER
-        value += self.is_in_favourites ? 1.0 : 0.0
-        return value
+        if visits >= MIN_VISITS
+            score += 1
+            count += 1
+        end
+        if is_in_favourites
+            score += 1
+            count += 1
+        end
+        return count == 0 ? nil : score/count
     end
 end

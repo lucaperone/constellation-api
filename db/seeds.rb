@@ -259,9 +259,9 @@ p "Creating ratings"
 
 User.all.each do |user|
     ids = Item.pluck(:id)
-    50.times do
+    25.times do
         item = Item.find(ids.sample)
-        UserItemEdge.create!(
+        UserItemEdge.create(
             user: user,
             item: item,
             rating: [rand(0..10), nil].sample,
@@ -279,7 +279,7 @@ User.all.each do |user|
         id = ids.sample
         if (UsersEdge.where(user_a: user, node_b_id: id).or(UsersEdge.where(node_a_id: id, user_b: user)).empty?)
             friend = User.find(id)
-            UsersEdge.create!(
+            UsersEdge.create(
                 user_a: user,
                 user_b: friend,
                 are_friends: true
