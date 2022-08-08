@@ -2,8 +2,6 @@ class Edge < ApplicationRecord
     belongs_to :node_a, :class_name => 'Node'
     belongs_to :node_b, :class_name => 'Node'
 
-    after_create :update_similarity
-
     validate :no_parallel
     validate :no_loop
     validates :similarity, numericality: { in: 0.0..1.0 }
@@ -23,6 +21,6 @@ class Edge < ApplicationRecord
     end
 
     def self.between(node_a, node_b)
-        return Edge.where(node_a: node_a, node_b: node_b).or(Edge.where(node_a: node_b, node_b: node_a)).first
+        return self.where(node_a: node_a, node_b: node_b).or(self.where(node_a: node_b, node_b: node_a)).first
     end
 end
