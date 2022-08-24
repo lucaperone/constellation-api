@@ -65,11 +65,11 @@ class Node < ApplicationRecord
         return 1 - ((distance/keys.length)**(1.0/p))
     end
 
-    def edges
-        return Edge.where(node_a_id: id).or(Edge.where(node_b_id: id))
+    def edges(type = Edge)
+        return type.where(node_a_id: id).or(type.where(node_b_id: id))
     end
 
     def normalized_vector
-        return self.features.nil? ? {} : self.features
+        return self.features.nil? ? {} : self.features.clone
     end
 end

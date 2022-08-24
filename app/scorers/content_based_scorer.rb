@@ -1,9 +1,11 @@
 class ContentBasedScorer < Scorer
-    def initialize(user)
-      @user = user
+    attr_accessor :node
+    
+    def initialize(node)
+      @node = node
     end
     
-    def score(item)
-      return Node.similarity(@user, item), MAX_WEIGHT
+    def score(node)
+      return Node.similarity(@node, node), MAX_WEIGHT
     end
 end

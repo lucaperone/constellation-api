@@ -3,6 +3,16 @@ class User < Node
     MAX_AGE = 70
     AGE_NORMALIZER = 1.0/(MAX_AGE-MIN_AGE)
 
+    def friends
+        edges = UsersEdge.where(node_a_id: id).or(UsersEdge.where(node_b_id: id))
+        return User.find(edges.map{|edge| edge.node_a_id == id ? edge.node_b_id : edge.node_a_id})
+    end
+
+    def favourites
+        edges = UserItemEdge.where(node_a_id: id, is_in_favourites: true)
+        return edges.map{|edge| edge.node_b}
+    end
+
     def normalized_vector
         vector = super
         unless self.birthday.nil?

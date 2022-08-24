@@ -20,16 +20,17 @@ class FeedbackController < ApplicationController
             new_features = @edge.user.features
             new_features.each do |key, value|
                 # Kinda Perceptron Delta rule
-                new_features[key] = (value 
-                    + (@edge.item.features[key] - value).clamp(0,1) # Only take tags present on item into account
-                    * LEARNING_RATE 
-                    * (score - old_score)).clamp(0,1)
+                new_features[key] = (
+                    value + 
+                    (@edge.item.features[key] - value).clamp(0,1) * # Only take tags present on item into account
+                    LEARNING_RATE * 
+                    (score - old_score)
+                ).clamp(0,1)
             end
             if @edge.user.update(features: new_features)
                 render status: :ok
             else
                 render json: @edge.user.errors, status: :unprocessable_entity
-
             end
         else
             render status: :ok
@@ -41,7 +42,7 @@ class FeedbackController < ApplicationController
     def feedback_params
         params.require(:feedback).require(:user)
         params.require(:feedback).require(:item)
-        feedback_params = params.require(:feedback).permit(:user, :item, :rating, :is_in_favourites, :visits)
+        feedback_params = params.require(:feedback).permit(:user, :item, :rating, :is_in_favorites, :visits)
         feedback_params[:user] = User.find(feedback_params[:user])
         feedback_params[:item] = Item.find(feedback_params[:item])
         return feedback_params

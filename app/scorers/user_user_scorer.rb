@@ -6,7 +6,7 @@ class UserUserScorer < Scorer
         @users = User.all.sort_by{|user| Node.similarity(@user, user)}.reverse!.take(MAX_USERS)
         @minmax = {}
         @users.each do |user|
-            min, max = user.edges.where(type: "UserItemEdge").map{|edge| edge.score}.compact.minmax
+            min, max = user.edges(UserItemEdge).map{|edge| edge.score}.compact.minmax
             @minmax[user.id] = {min: min, range: max-min}
         end
     end
@@ -14,7 +14,7 @@ class UserUserScorer < Scorer
     def score(item)
         ratings = 0.0
         weights = 0.0
-        @edges = item.edges.where(type: "UserItemEdge", node_a: @users)
+        @edges = item.edges(UserItemEdge).where(node_a: @users)
         @edges.each do |user_item_edge|
             user = user_item_edge.user
             score = user_item_edge.score

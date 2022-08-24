@@ -2,7 +2,7 @@ class ItemItemScorer < Scorer
     attr_reader :user, :edges
     def initialize(user)
       @user = user
-      @edges = @user.edges.where(type: "UserItemEdge")
+      @edges = @user.edges(UserItemEdge)
     end
 
     def score(item)
