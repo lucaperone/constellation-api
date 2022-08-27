@@ -4,7 +4,7 @@ class User < Node
     AGE_NORMALIZER = 1.0/(MAX_AGE-MIN_AGE)
 
     def friends
-        edges = UsersEdge.where(node_a_id: id).or(UsersEdge.where(node_b_id: id))
+        edges = UsersEdge.where(are_friends: true).where(node_a_id: id).or(UsersEdge.where(node_b_id: id))
         return User.find(edges.map{|edge| edge.node_a_id == id ? edge.node_b_id : edge.node_a_id})
     end
 
