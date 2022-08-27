@@ -8,7 +8,8 @@ Rails.application.routes.draw do
     get "/graph/:id", to: "recommendation#graph"
 
     get "/favourites/:id", to: "user#favourites"
-    get "/friends/:id", to: "user#favourites"
+    get "/friends/:id", to: "user#friends"
     
-    post "/feedback", to: 'feedback#update'
+    post "/friendship", to: "user#friendship"
+    post "/feedback", to: "feedback#update"
 end
