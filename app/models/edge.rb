@@ -2,7 +2,7 @@ class Edge < ApplicationRecord
     belongs_to :node_a, :class_name => 'Node'
     belongs_to :node_b, :class_name => 'Node'
 
-    validate :no_parallel
+    validate :no_parallel, on: :create
     validate :no_loop
     validates :similarity, numericality: { in: 0.0..1.0 }
 
