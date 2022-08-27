@@ -133,6 +133,17 @@ class RecommendationController < ApplicationController
             ], 20, threshold: 0.5)
         })
 
+        @lists.each do |list|
+            list[:items] = list[:items].clone.map{ |item|
+                edge = Edge.between(@user, item)
+                {
+                    item: item,
+                    is_in_favourites: edge ? edge.is_in_favourites : false,
+                    rating: edge ? edge.rating ? edge.rating : 0 : 0
+                }
+            }
+        end
+
         render json: @lists
     end
 
