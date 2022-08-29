@@ -6,8 +6,6 @@ class Edge < ApplicationRecord
     validate :no_loop
     validates :similarity, numericality: { in: 0.0..1.0 }
 
-    MODIFIER_SCALE = 0.15
-
     def no_parallel
         unless Edge.between(node_a, node_b).nil?
             errors.add(:nodes, "Edge already exists")

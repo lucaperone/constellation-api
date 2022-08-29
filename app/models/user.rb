@@ -16,7 +16,7 @@ class User < Node
     def normalized_vector
         vector = super
         unless self.birthday.nil?
-            vector[:age] = normalized_age(age)
+            vector[:age] = normalized_age
         end
         return vector
     end
@@ -36,7 +36,7 @@ class User < Node
         end
     end
 
-    def normalized_age(age)
+    def normalized_age
         return (age.clamp(MIN_AGE, MAX_AGE) - MIN_AGE) * AGE_NORMALIZER
     end
 end

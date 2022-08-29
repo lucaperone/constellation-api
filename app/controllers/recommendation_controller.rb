@@ -2,7 +2,7 @@ class RecommendationController < ApplicationController
     before_action :set_user
 
     def graph
-        nodes_obj = @user.friends.shuffle.take(5) + @user.favourites
+        nodes_obj = @user.friends.shuffle.take(5) + @user.favourites.shuffle.take(5)
         
         scorer = ContentBasedScorer.new(nil)
         temp = []
@@ -176,7 +176,8 @@ class RecommendationController < ApplicationController
         @user = User.find(params[:id])
     end
         
-    def recommend(scorers, recommendations_number, threshold: 0.0, items: Item.all)        
+    def recommend(scorers, recommendations_number, threshold: 0.0, items: Item.all)
+        # Compute weighted score for each item    
         items_score = {}
         items.each do |item|
             scores = 0.0
@@ -190,6 +191,8 @@ class RecommendationController < ApplicationController
             items_score[item.id] = weights == 0 ? 0 : (scores / weights)
         end
 
+        # Filter by threshold, sort by score, from ASC to DESC,
+        # Keep only needed number, keep only ids, fetch items in db
         return Item.find(
             items_score
             .filter{|id, score| score >= threshold}
