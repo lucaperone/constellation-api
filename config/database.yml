@@ -24,4 +24,5 @@ test:
 
 production:
     <<: *default
-    database: db/production.sqlite3
+    encoding: unicode
+    database: dtc_production
