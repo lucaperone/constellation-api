@@ -1,16 +1,20 @@
 class FeedbackController < ApplicationController
     LEARNING_RATE = 0.3
     def update
+        adjust_preferences(feedback_params) ? (render status: :ok) : (render json: @edge.user.errors, status: :unprocessable_entity)
+    end
+
+    def adjust_preferences(params)
         # Create edge if it doesn't exist and get score
-        @edge = UserItemEdge.between(feedback_params[:user], feedback_params[:item])
+        @edge = UserItemEdge.between(params[:user], params[:item])
         old_score = nil
         if @edge.nil?
-            unless @edge = UserItemEdge.create(feedback_params)
-                render json: @edge.errors, status: :unprocessable_entity
+            unless @edge = UserItemEdge.create(params)
+                return false
             end
         else
             old_score = @edge.score
-            @edge.update(feedback_params)
+            @edge.update(params)
         end
 
         old_score ||= 0.5
@@ -37,12 +41,12 @@ class FeedbackController < ApplicationController
                 end
             end
             if @edge.user.update(features: new_features)
-                render status: :ok
+                return true
             else
-                render json: @edge.user.errors, status: :unprocessable_entity
+                return false
             end
         else
-            render status: :ok
+            return true
         end
     end
 

@@ -10,229 +10,95 @@ require 'faker'
 
 p "Creating Features"
 
-Tag.create!([
-    {name: "All styles"},
-    {name: "Reggaeton"},
-    {name: "Pop"},
-    {name: "Electro"},
-    {name: "Dance"},
-    {name: "Old school"},
-    {name: "Rock"},
-    {name: "Techno"},
-    {name: "Grunge"},
-    {name: "Acid"},
-    {name: "Funk"},
-    {name: "Swing"},
-    {name: "Salsa"},
-    {name: "French Rap"},
-    {name: "Drill"},
-    {name: "Drill"},
-])
-
-Category.create!([
-    {name: "Night club"},
-    {name: "Bar"},
-    {name: "Concert"},
-])
-
-user_clusters = [
-    {   # Luca
-        "Reggaeton"=>0,
-        "Pop"=>0,
-        "All styles"=>0,
-        "Electro"=>1,
-        "Dance"=>0,
-        "Old school"=>0,
-        "Rock"=>0,
-        "Techno"=>1,
-        "Grunge"=>0,
-        "Acid"=>1,
-        "Funk"=>0,
-        "Swing"=>0,
-        "Salsa"=>0,
-        "French Rap"=>1,
-        "Drill"=>1,
-        "Night club"=>1,
-        "Bar"=>0,
-        "Concert"=>1
-    },
-    {   # Gaelle
-        "Reggaeton"=>1,
-        "Pop"=>0,
-        "All styles"=>1,
-        "Electro"=>0,
-        "Dance"=>1,
-        "Old school"=>0,
-        "Rock"=>0,
-        "Techno"=>0,
-        "Grunge"=>0,
-        "Acid"=>0,
-        "Funk"=>1,
-        "Swing"=>1,
-        "Salsa"=>1,
-        "French Rap"=>0,
-        "Drill"=>0,
-        "Night club"=>1,
-        "Bar"=>1,
-        "Concert"=>0
-    },
-    {   # Eleo
-        "Reggaeton"=>1,
-        "Pop"=>1,
-        "All styles"=>1,
-        "Electro"=>0,
-        "Dance"=>0,
-        "Old school"=>1,
-        "Rock"=>1,
-        "Techno"=>0,
-        "Grunge"=>0,
-        "Acid"=>0,
-        "Funk"=>0,
-        "Swing"=>0,
-        "Salsa"=>0,
-        "French Rap"=>0,
-        "Drill"=>0,
-        "Night club"=>1,
-        "Bar"=>1,
-        "Concert"=>1
-    },
-    {   # Weird
-        "Reggaeton"=>0,
-        "Pop"=>0,
-        "All styles"=>0,
-        "Electro"=>1,
-        "Dance"=>0,
-        "Old school"=>0,
-        "Rock"=>1,
-        "Techno"=>0,
-        "Grunge"=>1,
-        "Acid"=>0,
-        "Funk"=>1,
-        "Swing"=>0,
-        "Salsa"=>0,
-        "French Rap"=>0,
-        "Drill"=>1,
-        "Night club"=>0,
-        "Bar"=>1,
-        "Concert"=>1
-    },
+tags = [
+    "All styles",
+    "Reggaeton",
+    "Pop",
+    "Electro",
+    "Dance",
+    "Old school",
+    "Rock",
+    "Techno",
+    "Grunge",
+    "Acid",
+    "Funk",
+    "Swing",
+    "Salsa",
+    "French Rap",
+    "Drill",
 ]
 
-item_clusters = [
-    {   # Audio
-        "Reggaeton"=>0,
-        "Pop"=>0,
-        "All styles"=>0,
-        "Electro"=>1,
-        "Dance"=>1,
-        "Old school"=>0,
-        "Rock"=>0,
-        "Techno"=>1,
-        "Grunge"=>0,
-        "Acid"=>1,
-        "Funk"=>0,
-        "Swing"=>0,
-        "Salsa"=>0,
-        "French Rap"=>0,
-        "Drill"=>0,
-        "Night club"=>1,
-        "Bar"=>0,
-        "Concert"=>0
-    },
-    {   # Village
-        "Reggaeton"=>1,
-        "Pop"=>0,
-        "All styles"=>1,
-        "Electro"=>0,
-        "Dance"=>1,
-        "Old school"=>0,
-        "Rock"=>0,
-        "Techno"=>0,
-        "Grunge"=>0,
-        "Acid"=>0,
-        "Funk"=>0,
-        "Swing"=>0,
-        "Salsa"=>0,
-        "French Rap"=>0,
-        "Drill"=>0,
-        "Night club"=>1,
-        "Bar"=>1,
-        "Concert"=>0
-    },
-    {   # Parf
-        "Reggaeton"=>0,
-        "Pop"=>1,
-        "All styles"=>1,
-        "Electro"=>0,
-        "Dance"=>0,
-        "Old school"=>1,
-        "Rock"=>0,
-        "Techno"=>0,
-        "Grunge"=>0,
-        "Acid"=>0,
-        "Funk"=>0,
-        "Swing"=>0,
-        "Salsa"=>0,
-        "French Rap"=>0,
-        "Drill"=>0,
-        "Night club"=>1,
-        "Bar"=>1,
-        "Concert"=>0
-    },
-    {   # Guitare en scene
-        "Reggaeton"=>0,
-        "Pop"=>0,
-        "All styles"=>0,
-        "Electro"=>0,
-        "Dance"=>0,
-        "Old school"=>0,
-        "Rock"=>1,
-        "Techno"=>0,
-        "Grunge"=>1,
-        "Acid"=>0,
-        "Funk"=>1,
-        "Swing"=>0,
-        "Salsa"=>0,
-        "French Rap"=>0,
-        "Drill"=>0,
-        "Night club"=>0,
-        "Bar"=>0,
-        "Concert"=>1
-    },
-    {   # Dance bar
-        "Reggaeton"=>1,
-        "Pop"=>1,
-        "All styles"=>0,
-        "Electro"=>0,
-        "Dance"=>0,
-        "Old school"=>0,
-        "Rock"=>0,
-        "Techno"=>0,
-        "Grunge"=>0,
-        "Acid"=>0,
-        "Funk"=>0,
-        "Swing"=>1,
-        "Salsa"=>1,
-        "French Rap"=>0,
-        "Drill"=>0,
-        "Night club"=>0,
-        "Bar"=>1,
-        "Concert"=>0
-    },
+tags.each do |tag|
+    Tag.create({name: tag})
+end
+
+categories = [
+    "Night club",
+    "Bar",
+    "Concert",
 ]
+
+categories.each do |category|
+    Category.create!({name: category})
+end
+
+features = tags + categories
+
+N_FEATURES = features.length
+N_TAGS = tags.length
+N_CATS = categories.length
+N_USER_CLUSTERS = 6
+N_USER_FEATURES = 9
+N_ITEM_CLUSTERS = 4
+N_ITEM_TAGS = 6
+N_ITEM_CATS = 1
+
+
+user_clusters = []
+N_USER_CLUSTERS.times do
+    cluster = {}
+    distribution = [1] * N_USER_FEATURES + [0] * (N_FEATURES - N_USER_FEATURES)
+    features.each do |feature|
+        cluster[feature] = distribution.sample
+    end
+    user_clusters.append(cluster)
+end
+
+item_clusters = []
+N_ITEM_CLUSTERS.times do
+    cluster = {}
+    tag_distribution = [1] * N_ITEM_TAGS + [0] * (N_TAGS - N_ITEM_TAGS)
+    tags.each do |tag|
+        cluster[tag] = tag_distribution.sample
+    end
+    cat_distribution = [1] * N_ITEM_CATS + [0] * (N_CATS - N_ITEM_CATS)
+    categories.each do |cat|
+        cluster[cat] = cat_distribution.sample
+    end
+    item_clusters.append(cluster)
+end
 
 p "Generating Users"
 
 users = []
-1000.times do |i|
-    v = user_clusters.sample.clone
-    v.each do |key, value|
-        v[key] = v[key] == 1 ? (v[key] - rand(0.0..0.4)) : (v[key] + rand(0.0..0.2))
+1000.times do
+    index = rand(0...N_USER_CLUSTERS)
+    vector = user_clusters[index].clone
+    # Assign user to a cluster
+    # Add some variation in the intensity of appreciation
+    vector.each do |key, value|
+        vector[key] = vector[key] == 1 ? rand(0.6..1) : rand(0.0..0.2)
+    end
+    # Add some "outliers"
+    3.times do
+        f = features.sample
+        vector[f] = vector[f] > 0.5 ? vector[f] - 0.3 : vector[f] + 0.3
     end
     users.append({
+        cluster: "u-#{index}",
         name: Faker::Name.first_name,
         birthday: Faker::Date.birthday(min_age: 5, max_age: 100),
-        features: v
+        features: vector
     })
 end
     
@@ -243,11 +109,20 @@ User.create!(users)
 p "Generating Items"
 
 items = []
-50.times do |i|
+100.times do
+    # Assign item to a cluster
+    index = rand(0...N_ITEM_CLUSTERS)
+    vector = item_clusters[index].clone
+    # Add some "outliers"
+    2.times do
+        t = tags.sample
+        vector[t] = vector[t] == 1 ? 0 : 1
+    end
     items.append({
-        name: Faker::Cannabis.brand,
+        cluster: "i-#{index}",
+        name: Faker::App.name,
         age_restriction: [0, 16, 18].sample,
-        features: item_clusters.sample.clone
+        features: vector
     })
 end
     
@@ -257,36 +132,39 @@ Item.create!(items)
     
 p "Creating ratings"
 
+rater = FeedbackController.new
+
 User.all.each do |user|
-    ids = Item.pluck(:id)
+    best_cluster = (0...N_ITEM_CLUSTERS).max_by{|id| Node.cosine_similarity(item_clusters[id], user.normalized_vector, features)}
     25.times do
-        item = Item.find(ids.sample)
-        UserItemEdge.create(
+        cluster = ([best_cluster] * 4 + [rand(0...N_ITEM_CLUSTERS)]).sample
+        item = Item.where(cluster: "i-#{cluster}").sample
+        rater.adjust_preferences({
             user: user,
             item: item,
-            rating: [rand(0..10), nil].sample,
-            is_in_favourites: ([false] * 19).append(true).sample,
-            visits: [rand(0..12), 0, 0].sample
-        )
+            rating: ([rand(0..10)] + [nil] * 10).sample,
+            is_in_favourites: ([false] * 3 + [true]).sample,
+            visits: ([rand(0..12)] + [0] * 5).sample
+        })
     end
 end
 
-p "Creating friends"
+# p "Creating friends"
 
-User.all.each do |user|
-    ids = User.where.not(id: user.id).pluck(:id)
-    20.times do
-        id = ids.sample
-        if (UsersEdge.where(user_a: user, node_b_id: id).or(UsersEdge.where(node_a_id: id, user_b: user)).empty?)
-            friend = User.find(id)
-            UsersEdge.create(
-                user_a: user,
-                user_b: friend,
-                are_friends: true
-            )
-        end
-    end
-end
+# User.all.each do |user|
+#     ids = User.where.not(id: user.id).pluck(:id)
+#     20.times do
+#         id = ids.sample
+#         if (UsersEdge.where(user_a: user, node_b_id: id).or(UsersEdge.where(node_a_id: id, user_b: user)).empty?)
+#             friend = User.find(id)
+#             UsersEdge.create(
+#                 user_a: user,
+#                 user_b: friend,
+#                 are_friends: true
+#             )
+#         end
+#     end
+# end
 
 
                 

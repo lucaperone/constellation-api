@@ -4,7 +4,6 @@ class Edge < ApplicationRecord
 
     validate :no_parallel, on: :create
     validate :no_loop
-    validates :similarity, numericality: { in: 0.0..1.0 }
 
     def no_parallel
         unless Edge.between(node_a, node_b).nil?

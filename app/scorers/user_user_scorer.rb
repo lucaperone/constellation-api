@@ -24,7 +24,6 @@ class UserUserScorer < Scorer
                 ratings += (score - @minmax[user.id][:min]) * weight / @minmax[user.id][:range]
             end
         end
-        puts @minmax
         return (weights == 0.0 ? 0.0 : (ratings / weights)), @edges.length.clamp(0,MAX_WEIGHT)
     end
 end

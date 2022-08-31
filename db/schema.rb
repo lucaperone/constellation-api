@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 2022_08_04_175707) do
     t.string "type"
     t.bigint "node_a_id"
     t.bigint "node_b_id"
-    t.float "similarity", default: 0.0
     t.boolean "are_friends", default: false
     t.boolean "is_in_favourites", default: false
     t.integer "rating"
@@ -38,6 +37,7 @@ ActiveRecord::Schema.define(version: 2022_08_04_175707) do
 
   create_table "nodes", force: :cascade do |t|
     t.string "type"
+    t.string "cluster"
     t.string "name"
     t.decimal "latitude", precision: 7, scale: 5
     t.decimal "longitude", precision: 7, scale: 5
