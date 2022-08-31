@@ -1,8 +1,8 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
+
 # Examples:
-#
+
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
@@ -149,22 +149,22 @@ User.all.each do |user|
     end
 end
 
-# p "Creating friends"
+p "Creating friends"
 
-# User.all.each do |user|
-#     ids = User.where.not(id: user.id).pluck(:id)
-#     20.times do
-#         id = ids.sample
-#         if (UsersEdge.where(user_a: user, node_b_id: id).or(UsersEdge.where(node_a_id: id, user_b: user)).empty?)
-#             friend = User.find(id)
-#             UsersEdge.create(
-#                 user_a: user,
-#                 user_b: friend,
-#                 are_friends: true
-#             )
-#         end
-#     end
-# end
+User.all.each do |user|
+    ids = User.where.not(id: user.id).pluck(:id)
+    20.times do
+        id = ids.sample
+        if (UsersEdge.where(user_a: user, node_b_id: id).or(UsersEdge.where(node_a_id: id, user_b: user)).empty?)
+            friend = User.find(id)
+            UsersEdge.create(
+                user_a: user,
+                user_b: friend,
+                are_friends: true
+            )
+        end
+    end
+end
 
 
                 

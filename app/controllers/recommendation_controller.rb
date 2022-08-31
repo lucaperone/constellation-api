@@ -18,15 +18,15 @@ class RecommendationController < ApplicationController
             ItemItemScorer.new(@user), # Item-Item collaborative
         ]
         nodes_obj.concat(recommend(scorers, 30, threshold: 0.3))
-
+        nodes_obj.prepend(@user)
         nodes_obj.uniq!
-
+        
         nodes = nodes_obj.map{|node| {
             id: node.id.to_s,
             label: node.name,
             type: node.type
         }}
-
+            
         edges = []
         nodes_obj.each_with_index do |node_i, i|
             for j in (i+1)...nodes_obj.length do
