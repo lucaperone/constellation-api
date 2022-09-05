@@ -7,7 +7,7 @@ class UserUserScorer < Scorer
         @minmax = {}
         @users.each do |user|
             min, max = user.edges(UserItemEdge).map{|edge| edge.score}.compact.minmax
-            @minmax[user.id] = min & max ? {min: min, range: max-min} : nil
+            @minmax[user.id] =(min.nil? || max.nil?) ? nil : {min: min, range: max-min}
         end
     end
     
