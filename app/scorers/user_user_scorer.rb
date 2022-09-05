@@ -7,7 +7,7 @@ class UserUserScorer < Scorer
         @minmax = {}
         @users.each do |user|
             min, max = user.edges(UserItemEdge).map{|edge| edge.score}.compact.minmax
-            @minmax[user.id] = {min: min, range: max-min}
+            @minmax[user.id] = min & max ? {min: min, range: max-min} : nil
         end
     end
     
@@ -21,7 +21,11 @@ class UserUserScorer < Scorer
             unless score.nil?
                 weight = Node.similarity(@user, user)
                 weights += weight
-                ratings += (score - @minmax[user.id][:min]) * weight / @minmax[user.id][:range]
+                if @minmax[user.id].nil?
+                    ratings += score * weight
+                else
+                    ratings += (score - @minmax[user.id][:min]) * weight / @minmax[user.id][:range]
+                end
             end
         end
         return (weights == 0.0 ? 0.0 : (ratings / weights)), @edges.length.clamp(0,MAX_WEIGHT)
